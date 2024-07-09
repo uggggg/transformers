@@ -271,8 +271,8 @@ if TYPE_CHECKING:
     if is_datasets_available():
         import datasets
 
-logger = logging.get_logger(__name__)
-
+#logger = logging.get_logger(__name__)
+logger = logging.get_logger("transformers")
 
 # Name of the files used for checkpointing
 TRAINING_ARGS_NAME = "training_args.bin"
@@ -2232,7 +2232,28 @@ class Trainer:
                 rng_to_sync = True
 
             step = -1
+            def format_time(seconds):
+                return time.strftime("%H:%M:%S", time.gmtime(seconds))
+            start_time = time.time()
+            total_steps = len(epoch_iterator)
             for step, inputs in enumerate(epoch_iterator):
+                try:
+                    current_step=step
+                    elapsed_time = time.time() - start_time
+                    steps_per_sec = current_step / elapsed_time
+                    time_per_step = elapsed_time / current_step
+                    remaining_steps = total_steps - current_step
+                    remaining_time = remaining_steps / steps_per_sec
+                    logger.info( f"Epoch: [{epoch}],"
+                                f"Step [{current_step}/{total_steps}],"
+                                f'Elapsed Time: {format_time(elapsed_time)},'
+                                f'Estimated Remaining Time: {format_time(remaining_time)},'
+                                f'Speed: {time_per_step:.2f} steps/sec'
+                                )
+                except:
+                    pass
+                
+                
                 total_batched_samples += 1
 
                 if self.args.include_num_input_tokens_seen:
