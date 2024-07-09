@@ -3617,7 +3617,7 @@ else:
     _import_structure["trainer"] = ["Trainer"]
     _import_structure["trainer_pt_utils"] = ["torch_distributed_zero_first"]
     _import_structure["trainer_seq2seq"] = ["Seq2SeqTrainer"]
-
+    _import_structure["trainer_seq2seq_eval"] = ["Seq2SeqTrainer_EVAL"]
 # TensorFlow-backed objects
 try:
     if not is_tf_available():
@@ -7833,7 +7833,7 @@ if TYPE_CHECKING:
         from .trainer import Trainer
         from .trainer_pt_utils import torch_distributed_zero_first
         from .trainer_seq2seq import Seq2SeqTrainer
-
+        from .trainer_seq2seq_eval import Seq2SeqTrainer_EVAL
     # TensorFlow
     try:
         if not is_tf_available():
