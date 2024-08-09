@@ -211,7 +211,7 @@ def get_last_checkpoint(folder):
         content = os.listdir(folder)
     except:
         content = []
-        
+    #1    
     checkpoints = [
         path
         for path in content
